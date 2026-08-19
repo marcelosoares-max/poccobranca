@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agente de Cobrança WhatsApp · OLX × Blip · 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#000;
+    --bg2:#0a0a0a;
+    --accent:#6F2DBD;
+    --accent-lo:rgba(111,45,189,.15);
+    --wa:#25d366;
+    --wa-lo:rgba(37,211,102,.08);
+    --wa-mid:rgba(37,211,102,.18);
+    --text:#ededed;
+    --text-mute:#888;
+    --text-dim:#555;
+    --card:rgba(255,255,255,.03);
+    --card-hi:rgba(255,255,255,.06);
+    --card-border:rgba(255,255,255,.08);
+    --display:'Sora',system-ui,sans-serif;
+    --body:'Sora',system-ui,sans-serif;
+    --mono:'Space Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{font-family:var(--body);color:var(--text);background:var(--bg);overflow-x:hidden}
+  h1,h2,h3,h4,.num,.big,.eyebrow{font-family:var(--display)}
+
+  .scroller{height:100vh;overflow-y:scroll;scroll-snap-type:y proximity;scroll-behavior:smooth}
+  .scroller::-webkit-scrollbar{width:0}
+
+  section{position:relative;min-height:100vh;scroll-snap-align:start;display:flex;align-items:center;padding:100px 6vw 70px;background:var(--bg)}
+  .wrap{width:100%;max-width:1240px;margin:0 auto}
+
+  .rv{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  section.in .rv{opacity:1;transform:none}
+  section.in .rv:nth-child(2){transition-delay:.06s}
+  section.in .rv:nth-child(3){transition-delay:.12s}
+  section.in .rv:nth-child(4){transition-delay:.18s}
+  section.in .rv:nth-child(5){transition-delay:.24s}
+
+  .topnav{position:fixed;top:0;left:0;right:0;height:46px;z-index:60;background:rgba(0,0,0,.9);backdrop-filter:blur(14px);
+    display:flex;align-items:center;justify-content:space-between;padding:0 6vw;font-size:13px;border-bottom:1px solid rgba(255,255,255,.05)}
+  .brand-strip{display:flex;align-items:center;gap:14px}
+  .blip-logo{display:flex;align-items:center;gap:7px;font-weight:700;font-size:17px;color:#fff}
+  .blip-logo .bub{width:18px;height:18px;background:#fff;border-radius:50% 50% 50% 3px}
+  .nav-div{width:1px;height:20px;background:rgba(255,255,255,.15)}
+  .olx-nav{font-weight:800;font-size:18px;color:var(--accent);letter-spacing:1px}
+  .nav-links{display:flex;gap:20px}
+  .nav-links a{color:var(--text-dim);text-decoration:none;transition:color .2s;font-size:12px;letter-spacing:.5px}
+  .nav-links a:hover{color:#fff}
+
+  .dots{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:58;display:flex;flex-direction:column;gap:8px}
+  .dots button{width:6px;height:6px;border-radius:50%;border:none;background:rgba(255,255,255,.18);cursor:pointer;padding:0;transition:all .3s}
+  .dots button:hover{background:rgba(255,255,255,.45)}
+  .dots button.active{background:var(--accent);height:18px;border-radius:4px}
+
+  h1{font-weight:800;line-height:1.05;letter-spacing:-.4px}
+  .eyebrow{display:flex;align-items:center;gap:12px;color:var(--accent);font-weight:700;letter-spacing:2.5px;font-size:11px;text-transform:uppercase;margin-bottom:24px}
+  .eyebrow::before{content:"";width:28px;height:1.5px;background:var(--accent);border-radius:2px}
+  .hl-a{color:var(--accent)}
+  .hl-g{color:var(--wa)}
+  .lead{color:var(--text-mute);font-size:clamp(15px,1.3vw,19px);line-height:1.65;max-width:740px}
+  .lead b{color:var(--text);font-weight:600}
+  .sec-intro{color:var(--text-mute);font-size:clamp(14px,1.15vw,17px);line-height:1.65;max-width:760px;margin-bottom:44px}
+
+  /* === HERO === */
+  #s1 .wrap{display:flex;flex-direction:column;align-items:center;text-align:center}
+  #s1 h1{font-size:clamp(32px,5vw,74px);max-width:880px;margin-bottom:22px}
+  .hero-sub{color:var(--text-mute);font-size:clamp(15px,1.3vw,19px);max-width:620px;margin-bottom:48px;line-height:1.6}
+  .meta{display:flex;gap:clamp(22px,4vw,56px);flex-wrap:wrap;justify-content:center}
+  .meta .lbl{color:var(--text-dim);font-size:10px;letter-spacing:2px;font-weight:700;margin-bottom:5px}
+  .meta .val{font-size:14px;font-weight:600}
+  .scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--text-dim);font-size:9px;letter-spacing:2px;font-weight:600}
+  .mouse{width:18px;height:28px;border:1.5px solid var(--text-dim);border-radius:10px;position:relative}
+  .mouse::after{content:"";position:absolute;top:5px;left:50%;transform:translateX(-50%);width:3px;height:5px;background:var(--accent);border-radius:2px;animation:sd 1.6s infinite}
+  @keyframes sd{0%{opacity:0;top:5px}40%{opacity:1}80%{opacity:0;top:13px}100%{opacity:0}}
+
+  /* === MOTIVOS TABLE === */
+  .motivos-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:32px}
+  .motivo-card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;overflow:hidden;transition:all .4s cubic-bezier(.2,.7,.2,1)}
+  .motivo-card:hover{border-color:rgba(111,45,189,.35);transform:translateY(-3px);box-shadow:0 14px 44px rgba(0,0,0,.35),0 0 0 1px rgba(111,45,189,.12)}
+  .motivo-header{display:flex;align-items:center;gap:12px;padding:18px 22px;cursor:pointer}
+  .motivo-icon{font-size:22px}
+  .motivo-title{font-weight:700;font-size:15px;flex:1}
+  .motivo-badge{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.5px}
+  .badge-auto{background:rgba(37,211,102,.15);color:var(--wa)}
+  .badge-partial{background:rgba(255,193,7,.15);color:#ffc107}
+  .badge-human{background:rgba(239,83,80,.15);color:#ef5350}
+  .motivo-body{padding:0 22px 18px;display:none}
+  .motivo-body.open{display:block}
+  .motivo-body p{color:var(--text-mute);font-size:13px;line-height:1.6;margin-bottom:8px}
+  .motivo-body p b{color:var(--text);font-weight:600}
+  .motivo-label{color:var(--accent);font-weight:700;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+
+  /* === KPI GRID === */
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:32px}
+  .kpi-card{background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:22px;transition:transform .3s}
+  .kpi-card:hover{transform:translateY(-3px)}
+  .kpi-name{color:var(--accent);font-weight:700;font-size:13px;margin-bottom:6px;letter-spacing:.5px}
+  .kpi-desc{color:var(--text-mute);font-size:12.5px;line-height:1.5}
+  .kpi-note{color:var(--text-dim);font-size:11px;font-style:italic;margin-top:8px;line-height:1.4}
+
+  /* === PHONE MOCKUP === */
+  .mockup-center{display:flex;justify-content:center;margin-top:38px}
+  .phone{width:340px;height:680px;background:#000;border-radius:38px;border:3px solid #222;overflow:hidden;flex:0 0 auto;display:flex;flex-direction:column;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .phone-status{height:30px;background:#075e54;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:10px;color:rgba(255,255,255,.65)}
+  .phone-header{display:flex;align-items:center;gap:9px;padding:7px 10px;background:#075e54}
+  .ph-back{color:rgba(255,255,255,.65);font-size:15px}
+  .ph-avatar{width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff}
+  .ph-info{flex:1}
+  .ph-name{font-size:13px;font-weight:600;color:#fff}
+  .ph-online{font-size:10px;color:rgba(255,255,255,.55)}
+  .phone-body{flex:1;background:#0b141a;padding:10px;overflow-y:auto;display:flex;flex-direction:column;gap:5px;
+    background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 15h1v1h-1zM45 45h1v1h-1z' fill='%23ffffff' opacity='.012'/%3E%3C/svg%3E")}
+  .phone-body::-webkit-scrollbar{width:0}
+  .bub-in{max-width:90%;padding:7px 10px;border-radius:9px 9px 9px 3px;font-size:12px;line-height:1.45;color:#e0e0e0;background:#1f2c34;align-self:flex-start}
+  .bub-in b{font-weight:600}
+  .bub-in .time{display:block;text-align:right;font-size:9px;color:rgba(255,255,255,.35);margin-top:3px}
+  .bub-out{max-width:90%;padding:7px 10px;border-radius:9px 9px 3px 9px;font-size:12px;line-height:1.45;color:#e0e0e0;background:#005c4b;align-self:flex-end}
+  .bub-out .time{display:block;text-align:right;font-size:9px;color:rgba(255,255,255,.35);margin-top:3px}
+  .bub-date{align-self:center;padding:3px 12px;background:rgba(255,255,255,.05);border-radius:7px;font-size:10px;color:rgba(255,255,255,.45);margin:5px 0}
+  .bub-btns{display:flex;flex-direction:column;gap:0}
+  .bub-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:9px;border-top:1px solid rgba(255,255,255,.05);margin:-2px -10px -7px;font-size:12px;color:#53bdeb;font-weight:500;cursor:pointer}
+  .bub-btns .bub-btn+.bub-btn{border-top:1px solid rgba(255,255,255,.05)}
+  .phone-input{display:flex;align-items:center;gap:7px;padding:7px 9px;background:#1f2c34}
+  .pi-field{flex:1;height:34px;background:#2a3942;border-radius:18px;padding:0 12px;font-size:12px;color:rgba(255,255,255,.35);display:flex;align-items:center}
+  .pi-send{width:34px;height:34px;background:#00a884;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff}
+
+  /* === NEXT STEPS === */
+  .steps-list{display:flex;flex-direction:column;gap:0;position:relative;margin-top:20px}
+  .steps-list::before{content:"";position:absolute;left:15px;top:24px;bottom:24px;width:2px;background:linear-gradient(to bottom,var(--accent),var(--wa),rgba(255,255,255,.06))}
+  .step-item{position:relative;padding-left:48px;padding-bottom:6px}
+  .step-dot{position:absolute;left:8px;top:10px;width:16px;height:16px;border-radius:50%;background:var(--card-hi);border:2.5px solid var(--accent);z-index:2}
+  .step-card{background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:18px 22px;transition:all .3s}
+  .step-card:hover{border-color:rgba(111,45,189,.3);transform:translateX(6px)}
+  .step-num{color:var(--accent);font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+  .step-text{color:var(--text-mute);font-size:13.5px;line-height:1.55}
+  .step-text b{color:var(--text);font-weight:600}
+
+  /* === CLOSING === */
+  #s6{text-align:center}
+  #s6 .wrap{display:flex;flex-direction:column;align-items:center}
+  .cl-logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:24px;margin-bottom:36px}
+  .cl-logo .bub{width:24px;height:24px;background:#fff;border-radius:50% 50% 50% 4px}
+  #s6 h1{font-size:clamp(32px,4.6vw,66px);margin-bottom:20px}
+  .cl-line{color:var(--text-mute);font-size:clamp(15px,1.3vw,19px);line-height:1.6;max-width:640px;margin-bottom:40px}
+  .cl-team{background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:28px 32px;max-width:580px;text-align:left}
+  .cl-tag{color:var(--accent);font-weight:700;letter-spacing:1.5px;font-size:11px;text-transform:uppercase;margin-bottom:14px}
+  .cl-team p{color:var(--text-mute);font-size:14px;line-height:1.8}
+  .cl-team p b{color:var(--text);font-weight:600}
+
+  /* Responsive */
+  @media(max-width:900px){
+    .kpi-grid{grid-template-columns:1fr}
+    .phone{width:300px;height:620px}
+  }
+  @media(max-width:600px){
+    section{padding:80px 5vw 50px}
+  }
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="brand-strip">
+    <div class="blip-logo"><span class="bub"></span>blip</div>
+    <span class="nav-div"></span>
+    <span class="olx-nav">OLX</span>
+  </div>
+  <div class="nav-links">
+    <a href="#s1">Home</a>
+    <a href="#s2">Contexto</a>
+    <a href="#s3">Escopo</a>
+    <a href="#s4">Mockup</a>
+    <a href="#s5">KPIs</a>
+    <a href="#s6">Equipe</a>
+  </div>
+</div>
+
+<div class="dots" id="dots"></div>
+
+<div class="scroller" id="scroller">
+
+  <!-- 1 · HERO -->
+  <section id="s1">
+    <div class="wrap">
+      <div class="eyebrow rv">OLX × Blip · Agosto 2026</div>
+      <h1 class="rv">Agente de <span class="hl-a">Cobrança</span> via WhatsApp</h1>
+      <p class="hero-sub rv">Recuperação de crédito com IA conversacional — disparo proativo, resolução de dúvidas e máxima contenção sem transbordo humano.</p>
+      <div class="meta rv">
+        <div><div class="lbl">CLIENTE</div><div class="val">OLX</div></div>
+        <div><div class="lbl">POR</div><div class="val">Blip — FDE</div></div>
+        <div><div class="lbl">DATA</div><div class="val">Agosto 2026</div></div>
+        <div><div class="lbl">TIPO</div><div class="val">Prova de Conceito (POC)</div></div>
+      </div>
+      <div class="scroll-cue rv"><div class="mouse"></div>SCROLL</div>
+    </div>
+  </section>
+
+  <!-- 2 · CONTEXTO -->
+  <section id="s2">
+    <div class="wrap">
+      <div class="eyebrow rv">O desafio</div>
+      <h1 class="rv" style="font-size:clamp(26px,3.6vw,50px);margin-bottom:16px;max-width:780px">A régua de cobrança depende de <span class="hl-a">atendimento humano</span> para dúvidas previsíveis.</h1>
+      <p class="sec-intro rv">Hoje, boa parte das dúvidas geradas após o disparo de mensagens ativas de cobrança é recorrente e previsível. A OLX compartilhou o mapeamento de motivos de contato — e os dados mostram uma oportunidade clara de automação.</p>
+
+      <div class="rv" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;max-width:960px">
+        <div class="kpi-card" style="text-align:center">
+          <div style="font-family:var(--mono);font-size:clamp(32px,4vw,48px);font-weight:800;color:var(--accent);line-height:1">6</div>
+          <div style="color:var(--text-mute);font-size:12px;margin-top:6px">motivos de contato mapeados</div>
+        </div>
+        <div class="kpi-card" style="text-align:center">
+          <div style="font-family:var(--mono);font-size:clamp(32px,4vw,48px);font-weight:800;color:var(--wa);line-height:1">2</div>
+          <div style="color:var(--text-mute);font-size:12px;margin-top:6px">resolvíveis 100% pela IA</div>
+        </div>
+        <div class="kpi-card" style="text-align:center">
+          <div style="font-family:var(--mono);font-size:clamp(32px,4vw,48px);font-weight:800;color:#ffc107;line-height:1">3</div>
+          <div style="color:var(--text-mute);font-size:12px;margin-top:6px">parciais — IA coleta contexto e transborda</div>
+        </div>
+        <div class="kpi-card" style="text-align:center">
+          <div style="font-family:var(--mono);font-size:clamp(32px,4vw,48px);font-weight:800;color:#ef5350;line-height:1">1</div>
+          <div style="color:var(--text-mute);font-size:12px;margin-top:6px">transbordo direto (integração Salesforce)</div>
+        </div>
+      </div>
+
+      <div class="rv" style="margin-top:32px;max-width:800px">
+        <p style="color:var(--text-mute);font-size:14px;line-height:1.7">A meta da POC não é apenas automatizar o disparo — é fazer a <b style="color:#fff">IA resolver a dúvida dentro da própria conversa</b>, reservando o time humano para os casos que genuinamente exigem julgamento ou acesso a sistemas ainda não integrados.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · ESCOPO - MOTIVOS -->
+  <section id="s3">
+    <div class="wrap">
+      <div class="eyebrow rv">Escopo da POC</div>
+      <h1 class="rv" style="font-size:clamp(26px,3.6vw,50px);margin-bottom:16px;max-width:780px">Mapeamento de dúvidas × <span class="hl-a">cobertura da IA</span></h1>
+      <p class="sec-intro rv">Cada motivo de contato foi analisado: o que a IA resolve sozinha, e onde o transbordo humano ainda é necessário. Clique para expandir.</p>
+
+      <div class="motivos-grid rv">
+
+        <div class="motivo-card">
+          <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
+            <span class="motivo-icon">💬</span>
+            <span class="motivo-title">Falar sobre valores (Retenção)</span>
+            <span class="motivo-badge badge-partial">Parcial</span>
+          </div>
+          <div class="motivo-body">
+            <div class="motivo-label">O que o cliente traz</div>
+            <p>Cliente com reajuste ou que considera o valor do plano alto; deseja negociar ou cancelar.</p>
+            <div class="motivo-label">O que a IA resolve</div>
+            <p><b>Sondagem + proposta de valor da OLX.</b> Aplicação de desconto dentro de regras pré-aprovadas. Direcionamento comercial se optar por downgrade.</p>
+            <div class="motivo-label">Transbordo humano?</div>
+            <p>Somente se a negociação sair das regras pré-configuradas.</p>
+          </div>
+        </div>
+
+        <div class="motivo-card">
+          <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
+            <span class="motivo-icon">🧾</span>
+            <span class="motivo-title">Pagamento (2ª via / PDF)</span>
+            <span class="motivo-badge badge-partial">Parcial</span>
+          </div>
+          <div class="motivo-body">
+            <div class="motivo-label">O que o cliente traz</div>
+            <p>Cliente quer pagar com fatura em PDF (código de barras / QR PIX), não pelo link digital.</p>
+            <div class="motivo-label">O que a IA resolve</div>
+            <p><b>A IA identifica a intenção e coleta todo o contexto necessário</b> (nº do contrato, tipo de fatura, forma de pagamento desejada), transferindo ao atendente humano com as informações organizadas para envio do boleto correto.</p>
+            <div class="motivo-label">Transbordo humano?</div>
+            <p>Sim — nesta fase, o envio do boleto depende de ação humana por ausência de integração sistêmica.</p>
+            <p style="color:var(--wa);font-size:12px;margin-top:6px">⚡ <b>Potencial 100% IA:</b> com integração ao sistema de faturamento, a IA poderia gerar e enviar o boleto/QR PIX automaticamente, eliminando o transbordo.</p>
+          </div>
+        </div>
+
+        <div class="motivo-card">
+          <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
+            <span class="motivo-icon">💳</span>
+            <span class="motivo-title">Formas de pagamento</span>
+            <span class="motivo-badge badge-auto">100% IA</span>
+          </div>
+          <div class="motivo-body">
+            <div class="motivo-label">O que o cliente traz</div>
+            <p>Trocar forma de pagamento (boleto ↔ cartão), cadastrar novo cartão, ou recusa no cartão (saldo insuficiente, cartão de uso único).</p>
+            <div class="motivo-label">O que a IA resolve</div>
+            <p><b>Orientação passo a passo</b> de como alterar a forma de pagamento (recorrência ou cobrança única).</p>
+            <div class="motivo-label">Transbordo humano?</div>
+            <p>Somente contato com a administradora do cartão em caso de recusa — fora do escopo da IA nesta fase.</p>
+          </div>
+        </div>
+
+        <div class="motivo-card">
+          <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
+            <span class="motivo-icon">🔍</span>
+            <span class="motivo-title">Pagamento não identificado</span>
+            <span class="motivo-badge badge-partial">Parcial</span>
+          </div>
+          <div class="motivo-body">
+            <div class="motivo-label">O que o cliente traz</div>
+            <p>Cliente alega pagamento agendado/realizado que não foi identificado ou compensado.</p>
+            <div class="motivo-label">O que a IA resolve</div>
+            <p><b>A IA identifica o cenário, coleta os dados relevantes</b> (número do contrato, data do pagamento, forma utilizada) e solicita o comprovante ao cliente, transferindo tudo organizado ao atendente humano para validação.</p>
+            <div class="motivo-label">Transbordo humano?</div>
+            <p>Sim — nesta fase, a validação do pagamento depende de ação humana por ausência de integração com o sistema financeiro.</p>
+            <p style="color:var(--wa);font-size:12px;margin-top:6px">⚡ <b>Potencial 100% IA:</b> com integração ao sistema financeiro, a IA poderia consultar o status do pagamento em tempo real e resolver o caso automaticamente.</p>
+          </div>
+        </div>
+
+        <div class="motivo-card">
+          <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
+            <span class="motivo-icon">🚫</span>
+            <span class="motivo-title">Cancelamento</span>
+            <span class="motivo-badge badge-auto">100% IA</span>
+          </div>
+          <div class="motivo-body">
+            <div class="motivo-label">O que o cliente traz</div>
+            <p>Cliente comunica que não pagará pois deseja cancelar o plano.</p>
+            <div class="motivo-label">O que a IA resolve</div>
+            <p><b>Sondagem + proposta de valor.</b> Oferta de desconto ou pontuação extra no Clube de Vantagens + orientação de uso correto da plataforma.</p>
+            <div class="motivo-label">Transbordo humano?</div>
+            <p>Somente se o cliente mantiver a decisão de cancelar após a retenção — direcionamento comercial.</p>
+          </div>
+        </div>
+
+        <div class="motivo-card">
+          <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
+            <span class="motivo-icon">📄</span>
+            <span class="motivo-title">Pagamento de contrato já cancelado</span>
+            <span class="motivo-badge badge-human">Transbordo</span>
+          </div>
+          <div class="motivo-body">
+            <div class="motivo-label">O que o cliente traz</div>
+            <p>Cliente quer pagar fatura de contrato já cancelado por inadimplência.</p>
+            <div class="motivo-label">O que a IA resolve</div>
+            <p><b>Identificação do cenário</b> e orientação inicial ao cliente.</p>
+            <div class="motivo-label">Transbordo humano?</div>
+            <p>Sim — abertura de chamado via Salesforce para reativação, ou direcionamento ao WhatsApp de aquisição OLX.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · MOCKUP WHATSAPP -->
+  <section id="s4">
+    <div class="wrap">
+      <div class="eyebrow rv">Experiência do cliente</div>
+      <h1 class="rv" style="font-size:clamp(26px,3.6vw,50px);margin-bottom:14px;max-width:760px">Do <span class="hl-a">disparo</span> à resolução — tudo no WhatsApp.</h1>
+      <p class="sec-intro rv">O agente envia a mensagem ativa de cobrança e permanece disponível para tirar dúvidas — sem login, sem app, sem esforço.</p>
+
+      <div class="mockup-center rv">
+        <div class="phone">
+          <div class="phone-status"><span>09:41</span><span>📶 🔋</span></div>
+          <div class="phone-header">
+            <span class="ph-back">‹</span>
+            <div class="ph-avatar">OLX</div>
+            <div class="ph-info">
+              <div class="ph-name">OLX Cobrança</div>
+              <div class="ph-online">online</div>
+            </div>
+          </div>
+          <div class="phone-body" id="mockup-chat">
+            <div class="bub-date">Hoje</div>
+          </div>
+          <div class="phone-input">
+            <div class="pi-field">Mensagem</div>
+            <div class="pi-send">▶</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · KPIs -->
+  <section id="s5">
+    <div class="wrap">
+      <div class="eyebrow rv">Critérios de sucesso</div>
+      <h1 class="rv" style="font-size:clamp(26px,3.6vw,50px);margin-bottom:16px;max-width:780px">KPIs propostos para a <span class="hl-a">POC</span></h1>
+      <p class="sec-intro rv">Os valores-alvo devem ser definidos em conjunto com a OLX a partir do baseline atual. Sugerimos uma etapa de levantamento de dados antes do início da POC.</p>
+
+      <div class="kpi-grid rv">
+        <div class="kpi-card">
+          <div class="kpi-name">Taxa de contenção</div>
+          <div class="kpi-desc">% de conversas encerradas pela IA sem transbordo humano</div>
+          <div class="kpi-note">A definir com base no volume real de disparos e no baseline atual.</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-name">Conversão em pagamento</div>
+          <div class="kpi-desc">% de contatados que efetivam o pagamento após a mensagem ativa + interação com a IA</div>
+          <div class="kpi-note">Comparar contra a taxa de conversão atual do disparo humano/manual.</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-name">Cliques no link de pagamento</div>
+          <div class="kpi-desc">% de clientes que abrem o link enviado pela IA</div>
+          <div class="kpi-note">Indicador de engajamento inicial da campanha.</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-name">Retenção em cancelamento</div>
+          <div class="kpi-desc">% de clientes que permanecem ativos após sondagem da IA</div>
+          <div class="kpi-note">Depende das regras de negociação/desconto aprovadas para a POC.</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-name">TMA</div>
+          <div class="kpi-desc">Tempo médio entre o disparo e a resolução da dúvida</div>
+          <div class="kpi-note">Comparar contra o TMA humano atual.</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-name">CSAT</div>
+          <div class="kpi-desc">Nota de satisfação coletada ao final da conversa com a IA</div>
+          <div class="kpi-note">Pesquisa simples (1 pergunta) ao encerrar o atendimento.</div>
+        </div>
+      </div>
+
+      <div class="rv" style="margin-top:40px;max-width:760px">
+        <div class="eyebrow">Próximos passos</div>
+        <div class="steps-list">
+          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 1</div><div class="step-text"><b>Validação do escopo</b> e das regras de negociação/desconto com a OLX.</div></div></div>
+          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 2</div><div class="step-text"><b>Levantamento do baseline</b> para definição das metas de cada KPI.</div></div></div>
+          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 3</div><div class="step-text"><b>Configuração do agente</b> e dos fluxos mapeados no escopo.</div></div></div>
+          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 4</div><div class="step-text"><b>Definição do recorte de base</b> e período de execução da POC.</div></div></div>
+          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 5</div><div class="step-text"><b>Execução e acompanhamento</b> semanal dos KPIs.</div></div></div>
+          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 6</div><div class="step-text"><b>Consolidação de resultados</b> e plano de evolução para produção.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · CLOSING -->
+  <section id="s6">
+    <div class="wrap">
+      <div class="cl-logo rv"><span class="bub"></span>blip</div>
+      <h1 class="rv">Pronto para <span class="hl-a">começar</span>?</h1>
+      <p class="cl-line rv">Transformar a régua de cobrança em uma conversa inteligente — menos esforço humano, mais recuperação de crédito.</p>
+      <div class="cl-team rv">
+        <div class="cl-tag">Equipe</div>
+        <p><b>Solution Expert / FDE — Blip:</b> Marcelo Reis</p>
+        <p><b>KAM — Blip:</b> Vanessa Kneip</p>
+        <p><b>CSM — Blip:</b> Caio Soares</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+// IntersectionObserver for reveal animations
+const io = new IntersectionObserver(es=>{es.forEach(e=>{e.target.classList.toggle('in',e.isIntersecting)})},{threshold:.18});
+document.querySelectorAll('section').forEach(s=>io.observe(s));
+
+// Dots navigation
+const sections = document.querySelectorAll('section');
+const dotsC = document.getElementById('dots');
+sections.forEach((_,i)=>{const b=document.createElement('button');b.onclick=()=>{sections[i].scrollIntoView({behavior:'smooth'})};dotsC.appendChild(b)});
+const scroller = document.getElementById('scroller');
+function updateDots(){
+  const dots=[...dotsC.children];
+  let ci=0;
+  sections.forEach((s,i)=>{if(s.getBoundingClientRect().top<window.innerHeight/2)ci=i});
+  dots.forEach((d,i)=>{d.classList.toggle('active',i===ci)});
+}
+if(scroller)scroller.addEventListener('scroll',updateDots);
+window.addEventListener('load',updateDots);
+
+// WhatsApp mockup animation
+const chatData = [
+  {type:'in',msg:'Olá! Aqui é da <b>OLX</b>. 👋\n\nIdentificamos uma fatura em aberto referente ao seu plano <b>Profissional+</b>.\n\n💰 Valor: R$ 189,90\n📅 Vencimento: 05/08/2026\n\nAcesse o link para pagar agora:\n🔗 olx.com.br/pagar/a1b2c3',delay:800},
+  {type:'in',msg:'Se tiver alguma dúvida, estou aqui para ajudar! 😊',delay:1800},
+  {type:'out',msg:'Oi, tô achando esse valor muito alto. Queria negociar.',delay:3200},
+  {type:'in',msg:'Entendo sua preocupação! 💜\n\nO plano Profissional+ oferece:\n✅ Destaque nos anúncios\n✅ Até 5x mais visualizações\n✅ Selo verificado\n\nConsiderando esses benefícios, posso te oferecer um <b>desconto especial de 15%</b> para manter seu plano ativo.\n\nNovo valor: <b>R$ 161,42</b>',delay:4600},
+  {type:'out',msg:'Hmm, tá melhor. Aceito sim!',delay:6400},
+  {type:'in',msg:'Ótimo! 🎉 Aqui está seu link atualizado:\n\n🔗 olx.com.br/pagar/d4e5f6\n\nValor: <b>R$ 161,42</b>\nVálido até: 12/08/2026\n\nQualquer outra dúvida, é só me chamar!',delay:7800},
+];
+
+let chatIndex = 0;
+const chatBody = document.getElementById('mockup-chat');
+
+function addBubble(){
+  if(chatIndex >= chatData.length) return;
+  const d = chatData[chatIndex];
+  const div = document.createElement('div');
+  div.className = d.type === 'in' ? 'bub-in' : 'bub-out';
+  div.innerHTML = d.msg.replace(/\n/g,'<br>') + '<span class="time">' + new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) + (d.type==='in'?' ✓✓':'') + '</span>';
+  div.style.opacity = '0';
+  div.style.transform = 'translateY(8px)';
+  chatBody.appendChild(div);
+  requestAnimationFrame(()=>{
+    div.style.transition = 'opacity .3s, transform .3s';
+    div.style.opacity = '1';
+    div.style.transform = 'none';
+  });
+  chatBody.scrollTop = chatBody.scrollHeight;
+  chatIndex++;
+  if(chatIndex < chatData.length){
+    setTimeout(addBubble, chatData[chatIndex].delay - (chatIndex > 0 ? chatData[chatIndex-1].delay : 0));
+  }
+}
+
+// Start chat animation when mockup section is visible
+const mockupObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting && chatIndex === 0){
+      setTimeout(addBubble, 600);
+    }
+  });
+},{threshold:.3});
+const mockupSection = document.getElementById('s4');
+if(mockupSection) mockupObserver.observe(mockupSection);
+</script>
+
+</body>
+</html>
