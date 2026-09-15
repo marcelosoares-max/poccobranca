@@ -81,23 +81,25 @@
   .mouse::after{content:"";position:absolute;top:5px;left:50%;transform:translateX(-50%);width:3px;height:5px;background:var(--accent);border-radius:2px;animation:sd 1.6s infinite}
   @keyframes sd{0%{opacity:0;top:5px}40%{opacity:1}80%{opacity:0;top:13px}100%{opacity:0}}
 
-  /* === MOTIVOS TABLE === */
-  .motivos-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:32px}
-  .motivo-card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;overflow:hidden;transition:all .4s cubic-bezier(.2,.7,.2,1)}
-  .motivo-card:hover{border-color:rgba(111,45,189,.35);transform:translateY(-3px);box-shadow:0 14px 44px rgba(0,0,0,.35),0 0 0 1px rgba(111,45,189,.12)}
-  .motivo-header{display:flex;align-items:center;gap:12px;padding:18px 22px;cursor:pointer}
+  /* === MOTIVOS OPEN GRID === */
+  .motivos-open-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:32px}
+  .mo-card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:0;transition:border-color .3s,transform .3s}
+  .mo-card:hover{border-color:rgba(111,45,189,.35);transform:translateY(-3px)}
+  .mo-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
   .motivo-icon{font-size:22px}
-  .motivo-title{font-weight:700;font-size:15px;flex:1}
-  .motivo-badge{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.5px}
+  .motivo-badge{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.4px}
   .badge-auto{background:rgba(37,211,102,.15);color:var(--wa)}
   .badge-partial{background:rgba(255,193,7,.15);color:#ffc107}
   .badge-human{background:rgba(255,193,7,.15);color:#ffc107}
   .badge-api{background:rgba(83,133,239,.15);color:#5385ef}
-  .motivo-body{padding:0 22px 18px;display:none}
-  .motivo-body.open{display:block}
-  .motivo-body p{color:var(--text-mute);font-size:13px;line-height:1.6;margin-bottom:8px}
-  .motivo-body p b{color:var(--text);font-weight:600}
-  .motivo-label{color:var(--accent);font-weight:700;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+  .mo-title{font-weight:700;font-size:15px;color:var(--text);margin-bottom:14px;line-height:1.3}
+  .mo-section-label{color:var(--accent);font-weight:700;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;margin-top:12px}
+  .mo-section-label:first-of-type{margin-top:0}
+  .mo-text{color:var(--text-mute);font-size:12.5px;line-height:1.55;margin-bottom:0}
+  .mo-gain{margin-top:14px;padding:10px 12px;border-radius:8px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.2);color:#c8f5da;font-size:12px;line-height:1.45}
+  .mo-prereq{margin-top:14px;padding:10px 12px;border-radius:8px;background:rgba(83,133,239,.1);border:1px solid rgba(83,133,239,.22);color:#c2d5ff;font-size:12px;line-height:1.45}
+  @media(max-width:1024px){.motivos-open-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.motivos-open-grid{grid-template-columns:1fr}}
 
   /* === KPI GRID === */
   .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:32px}
@@ -144,12 +146,35 @@
   .step-text{color:var(--text-mute);font-size:13.5px;line-height:1.55}
   .step-text b{color:var(--text);font-weight:600}
 
+  /* === O QUE ESPERAR === */
+  .expect-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+  .expect-block{background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px}
+  .expect-block--highlight{border-color:rgba(111,45,189,.3);background:linear-gradient(135deg,rgba(111,45,189,.06) 0%,rgba(0,0,0,.02) 100%)}
+  .expect-block-header{display:flex;align-items:center;gap:10px}
+  .expect-icon{font-size:20px}
+  .expect-block-title{font-weight:700;font-size:13px;color:var(--text);line-height:1.3}
+  .expect-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .expect-stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px 12px}
+  .expect-num{font-family:var(--mono);font-size:clamp(22px,2.4vw,32px);font-weight:700;color:var(--accent);line-height:1;margin-bottom:5px}
+  .expect-block--highlight .expect-num{color:var(--wa)}
+  .expect-label{color:var(--text-mute);font-size:11px;line-height:1.4}
+  .expect-desc{color:var(--text-mute);font-size:12.5px;line-height:1.6}
+  .expect-source{font-size:10.5px;color:var(--text-dim);font-style:italic;border-top:1px solid var(--card-border);padding-top:10px;margin-top:auto}
+
+  .expect-summary{margin-top:28px;width:100%}
+  .expect-summary-inner{display:flex;align-items:stretch;background:var(--card);border:1px solid var(--card-border);border-radius:16px;overflow:hidden}
+  .expect-summary-col{flex:1;padding:24px 22px;display:flex;flex-direction:column;gap:8px}
+  .expect-summary-divider{width:1px;background:var(--card-border)}
+  .expect-summary-icon{font-size:22px}
+  .expect-summary-label{font-weight:700;font-size:13px;color:var(--text)}
+  .expect-summary-val{font-size:12.5px;color:var(--text-mute);line-height:1.5}
+
   /* === CLOSING === */
-  #s6{text-align:center}
-  #s6 .wrap{display:flex;flex-direction:column;align-items:center}
+  #s7{text-align:center}
+  #s7 .wrap{display:flex;flex-direction:column;align-items:center}
   .cl-logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:24px;margin-bottom:36px}
   .cl-logo .bub{width:24px;height:24px;background:#fff;border-radius:50% 50% 50% 4px}
-  #s6 h1{font-size:clamp(32px,4.6vw,66px);margin-bottom:20px}
+  #s7 h1{font-size:clamp(32px,4.6vw,66px);margin-bottom:20px}
   .cl-line{color:var(--text-mute);font-size:clamp(15px,1.3vw,19px);line-height:1.6;max-width:640px;margin-bottom:40px}
   .cl-team{background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:28px 32px;max-width:580px;text-align:left}
   .cl-tag{color:var(--accent);font-weight:700;letter-spacing:1.5px;font-size:11px;text-transform:uppercase;margin-bottom:14px}
@@ -160,6 +185,9 @@
   @media(max-width:900px){
     .kpi-grid{grid-template-columns:1fr}
     .phone{width:300px;height:620px}
+    .expect-grid{grid-template-columns:1fr}
+    .expect-summary-inner{flex-direction:column}
+    .expect-summary-divider{width:auto;height:1px}
   }
   @media(max-width:600px){
     section{padding:80px 5vw 50px}
@@ -180,7 +208,8 @@
     <a href="#s3">Escopo</a>
     <a href="#s4">Mockup</a>
     <a href="#s5">KPIs</a>
-    <a href="#s6">Equipe</a>
+    <a href="#s6">O que esperar</a>
+    <a href="#s7">Equipe</a>
   </div>
 </div>
 
@@ -241,110 +270,88 @@
     <div class="wrap">
       <div class="eyebrow rv">Escopo da POC</div>
       <h1 class="rv" style="font-size:clamp(26px,3.6vw,50px);margin-bottom:16px;max-width:780px">Mapeamento de dúvidas × <span class="hl-a">cobertura da IA</span></h1>
-      <p class="sec-intro rv">Cada motivo de contato foi analisado: o que a IA resolve sozinha, e onde o transbordo humano ainda é necessário. Clique para expandir.</p>
+      <p class="sec-intro rv">Cada motivo de contato foi analisado: o que a IA resolve sozinha, e onde o transbordo humano ainda é necessário.</p>
 
-      <div class="motivos-grid rv">
+      <div class="motivos-open-grid rv">
 
-        <div class="motivo-card">
-          <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
+        <div class="mo-card">
+          <div class="mo-top">
             <span class="motivo-icon">💬</span>
-            <span class="motivo-title">Falar sobre valores (Retenção)</span>
             <span class="motivo-badge badge-human">Transbordo com contexto</span>
           </div>
-          <div class="motivo-body">
-            <div class="motivo-label">O que o cliente traz</div>
-            <p>Cliente com reajuste ou que considera o valor do plano alto; deseja negociar ou cancelar.</p>
-            <div class="motivo-label">O que a IA resolve</div>
-            <p><b>A IA identifica o motivo e coleta o contexto da situação</b> — qual plano, qual o valor em questão e qual a intenção do cliente — e transborda para o time humano já com essas informações organizadas.</p>
-            <div class="motivo-label">Transbordo humano?</div>
-            <p>Sim — a negociação de valores é conduzida pelo atendente humano, que recebe o contexto completo coletado pela IA.</p>
-            <p style="color:#ffc107;font-size:12px;margin-top:6px">⚡ <b>Ganho:</b> otimização do atendimento e redução de TMA — o humano entra direto na negociação, sem precisar levantar o contexto do zero.</p>
-          </div>
+          <div class="mo-title">Falar sobre valores</div>
+          <div class="mo-section-label">O que o cliente traz</div>
+          <p class="mo-text">Cliente com reajuste ou que considera o valor do plano alto; deseja negociar ou cancelar.</p>
+          <div class="mo-section-label">O que a IA faz</div>
+          <p class="mo-text">Identifica a intenção do cliente e transborda para o atendente humano com o contexto coletado — plano, valor em questão e motivo da insatisfação.</p>
+          <div class="mo-gain">⚡ <b>Ganho:</b> humano entra direto na negociação, sem levantar contexto do zero. Redução de TMA.</div>
         </div>
 
-        <div class="motivo-card">
-          <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
+        <div class="mo-card">
+          <div class="mo-top">
             <span class="motivo-icon">🧾</span>
-            <span class="motivo-title">Pagamento (2ª via / PDF)</span>
             <span class="motivo-badge badge-api">Aguardando API</span>
           </div>
-          <div class="motivo-body">
-            <div class="motivo-label">O que o cliente traz</div>
-            <p>Cliente quer pagar com fatura em PDF (código de barras / QR PIX), não pelo link digital.</p>
-            <div class="motivo-label">O que a IA resolve</div>
-            <p><b>Automação 100% pela IA</b> — geração e envio automático do boleto/QR PIX diretamente no WhatsApp, sem intervenção humana.</p>
-            <div class="motivo-label">Dependência</div>
-            <p>Aguardando documentação de API da OLX para viabilizar a integração com o sistema de faturamento. Assim que disponível, esse fluxo entra no escopo de desenvolvimento.</p>
-            <p style="color:#ffc107;font-size:12px;margin-top:6px">⏳ <b>Status:</b> aguardando retorno do cliente (documentação de API).</p>
-          </div>
+          <div class="mo-title">Pagamento (2ª via / PDF)</div>
+          <div class="mo-section-label">O que o cliente traz</div>
+          <p class="mo-text">Cliente quer pagar com boleto em PDF (código de barras / QR PIX), não pelo link digital.</p>
+          <div class="mo-section-label">Cenário A — API viável</div>
+          <p class="mo-text">O bot consome a API da OLX, gera o boleto e envia diretamente na conversa. <b>100% automatizado.</b></p>
+          <div class="mo-section-label">Cenário B — API inviável</div>
+          <p class="mo-text">O bot transborda para o humano, que gera o boleto manualmente e envia via <b>Desk + Copilot</b>.</p>
+          <div class="mo-prereq">⏳ <b>Pré-requisito:</b> avaliação da documentação de API da OLX para definir o cenário aplicável.</div>
         </div>
 
-        <div class="motivo-card">
-          <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
+        <div class="mo-card">
+          <div class="mo-top">
             <span class="motivo-icon">💳</span>
-            <span class="motivo-title">Formas de pagamento</span>
             <span class="motivo-badge badge-auto">100% IA</span>
           </div>
-          <div class="motivo-body">
-            <div class="motivo-label">O que o cliente traz</div>
-            <p>Trocar forma de pagamento (boleto ↔ cartão), cadastrar novo cartão, ou recusa no cartão (saldo insuficiente, cartão de uso único).</p>
-            <div class="motivo-label">O que a IA resolve</div>
-            <p><b>Orientação passo a passo</b> de como alterar a forma de pagamento (recorrência ou cobrança única) — 100% resolvido pelo agente, sem transbordo humano.</p>
-            <div class="motivo-label">Transbordo humano?</div>
-            <p>Não. Somente em caso de recusa no cartão com necessidade de contato com a administradora — fora do escopo da IA nesta fase.</p>
-            <p style="color:#ffc107;font-size:12px;margin-top:6px">📋 <b>Pré-requisito:</b> OLX precisa fornecer a base de conhecimento com os procedimentos de troca de forma de pagamento.</p>
-          </div>
+          <div class="mo-title">Formas de pagamento</div>
+          <div class="mo-section-label">O que o cliente traz</div>
+          <p class="mo-text">Dúvidas sobre quais formas de pagamento são aceitas — PIX, boleto, cartão.</p>
+          <div class="mo-section-label">O que a IA faz</div>
+          <p class="mo-text">Informa as formas de pagamento disponíveis e orienta o cliente conforme a base de conhecimento da OLX. 100% resolvido pelo agente.</p>
+          <div class="mo-prereq">📋 <b>Pré-requisito:</b> OLX precisa enviar a base de conhecimento com as formas de pagamento aceitas.</div>
         </div>
 
-        <div class="motivo-card">
-          <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
+        <div class="mo-card">
+          <div class="mo-top">
             <span class="motivo-icon">🔍</span>
-            <span class="motivo-title">Pagamento não identificado</span>
-            <span class="motivo-badge badge-auto">100% IA</span>
+            <span class="motivo-badge badge-human">Transbordo com contexto</span>
           </div>
-          <div class="motivo-body">
-            <div class="motivo-label">O que o cliente traz</div>
-            <p>Cliente alega pagamento agendado/realizado que não foi identificado ou compensado.</p>
-            <div class="motivo-label">O que a IA resolve</div>
-            <p><b>A IA conduz todo o fluxo de atendimento:</b> identifica o cenário, coleta os dados relevantes (número do contrato, data do pagamento, forma utilizada) e <b>solicita o comprovante ao cliente</b>. O transbordo ocorre somente após o comprovante em mãos — o atendente humano entra apenas para a validação final.</p>
-            <div class="motivo-label">Transbordo humano?</div>
-            <p>Somente para validação do comprovante coletado pela IA — o atendente humano recebe a conversa qualificada, sem precisar levantar nenhum contexto.</p>
-            <p style="color:#ffc107;font-size:12px;margin-top:6px">📋 <b>Pré-requisito:</b> OLX precisa fornecer a base de conhecimento com os procedimentos de identificação de pagamento.</p>
-          </div>
+          <div class="mo-title">Pagamento não identificado</div>
+          <div class="mo-section-label">O que o cliente traz</div>
+          <p class="mo-text">Cliente alega pagamento realizado que não foi identificado ou compensado pelo sistema.</p>
+          <div class="mo-section-label">O que a IA faz</div>
+          <p class="mo-text">Pede desculpas ao cliente, solicita o envio do comprovante de pagamento e transborda para o atendente humano com o comprovante e o contexto coletado.</p>
+          <div class="mo-gain">⚡ <b>Ganho:</b> humano recebe o comprovante pronto para validação. Redução de TMA.</div>
         </div>
 
-        <div class="motivo-card">
-          <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
+        <div class="mo-card">
+          <div class="mo-top">
             <span class="motivo-icon">🚫</span>
-            <span class="motivo-title">Cancelamento</span>
             <span class="motivo-badge badge-human">Transbordo com contexto</span>
           </div>
-          <div class="motivo-body">
-            <div class="motivo-label">O que o cliente traz</div>
-            <p>Cliente comunica que não pagará pois deseja cancelar o plano.</p>
-            <div class="motivo-label">O que a IA resolve</div>
-            <p><b>A IA identifica a intenção de cancelamento, coleta o motivo e o contexto</b> (plano atual, tempo de contrato, situação financeira) e transborda para o time humano com as informações organizadas.</p>
-            <div class="motivo-label">Transbordo humano?</div>
-            <p>Sim — o atendente humano recebe o contexto completo da IA e conduz a negociação de retenção ou encaminha o cancelamento.</p>
-            <p style="color:#ffc107;font-size:12px;margin-top:6px">⚡ <b>Ganho:</b> otimização do atendimento e redução de TMA — o humano entra direto na retenção, sem precisar mapear a situação do cliente.</p>
-          </div>
+          <div class="mo-title">Cancelamento</div>
+          <div class="mo-section-label">O que o cliente traz</div>
+          <p class="mo-text">Cliente comunica que não pagará pois deseja cancelar o plano.</p>
+          <div class="mo-section-label">O que a IA faz</div>
+          <p class="mo-text">Identifica a intenção, coleta o motivo e o contexto (plano, tempo de contrato) e transborda com tudo organizado para o time humano.</p>
+          <div class="mo-gain">⚡ <b>Ganho:</b> humano entra direto na retenção, sem precisar mapear a situação. Redução de TMA.</div>
         </div>
 
-        <div class="motivo-card">
-          <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
+        <div class="mo-card">
+          <div class="mo-top">
             <span class="motivo-icon">📄</span>
-            <span class="motivo-title">Pagamento de contrato já cancelado</span>
             <span class="motivo-badge badge-human">Transbordo com contexto</span>
           </div>
-          <div class="motivo-body">
-            <div class="motivo-label">O que o cliente traz</div>
-            <p>Cliente quer pagar fatura de contrato já cancelado por inadimplência.</p>
-            <div class="motivo-label">O que a IA resolve</div>
-            <p><b>A IA identifica o cenário, coleta os dados do contrato cancelado</b> e transborda para o time humano com as informações organizadas para agilizar o processo de reativação.</p>
-            <div class="motivo-label">Transbordo humano?</div>
-            <p>Sim — abertura de chamado para reativação ou direcionamento ao WhatsApp de aquisição OLX, com contexto completo já disponível ao atendente.</p>
-            <p style="color:#ffc107;font-size:12px;margin-top:6px">⚡ <b>Ganho:</b> otimização do atendimento e redução de TMA — o humano recebe o caso qualificado e age imediatamente.</p>
-          </div>
+          <div class="mo-title">Contrato já cancelado</div>
+          <div class="mo-section-label">O que o cliente traz</div>
+          <p class="mo-text">Cliente quer pagar fatura de contrato já cancelado por inadimplência.</p>
+          <div class="mo-section-label">O que a IA faz</div>
+          <p class="mo-text">Identifica o cenário e coleta os dados do contrato, transbordando com contexto completo para agilizar a reativação.</p>
+          <div class="mo-gain">⚡ <b>Ganho:</b> humano recebe o caso qualificado e age imediatamente. Redução de TMA.</div>
         </div>
 
       </div>
@@ -405,11 +412,6 @@
           <div class="kpi-note">Indicador de engajamento inicial da campanha.</div>
         </div>
         <div class="kpi-card">
-          <div class="kpi-name">Retenção em cancelamento</div>
-          <div class="kpi-desc">% de clientes que permanecem ativos após sondagem da IA</div>
-          <div class="kpi-note">Depende das regras de negociação/desconto aprovadas para a POC.</div>
-        </div>
-        <div class="kpi-card">
           <div class="kpi-name">TMA</div>
           <div class="kpi-desc">Tempo médio entre o disparo e a resolução da dúvida</div>
           <div class="kpi-note">Comparar contra o TMA humano atual.</div>
@@ -432,17 +434,113 @@
           <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 1</div><div class="step-text"><b>Validação do escopo</b> e alinhamento das regras de negócio com a OLX.</div></div></div>
           <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 2</div><div class="step-text"><b>Envio da base de conhecimento</b> pela OLX — cobre os temas de Formas de Pagamento e Pagamento não Identificado. O prazo de desenvolvimento de <b>5 dias úteis</b> começa a partir do recebimento.</div></div></div>
           <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 3</div><div class="step-text"><b>Documentação de API</b> para 2ª via de boleto — aguardando retorno da OLX. Após recebimento, o fluxo de 2ª via entra no escopo com prazo adicional a combinar.</div></div></div>
-          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 4</div><div class="step-text"><b>Levantamento do baseline</b> e definição das metas de KPI para a POC.</div></div></div>
-          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 5</div><div class="step-text"><b>Definição do recorte de base</b> e período de execução da POC.</div></div></div>
-          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 6</div><div class="step-text"><b>Execução e acompanhamento</b> semanal dos KPIs.</div></div></div>
-          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 7</div><div class="step-text"><b>Consolidação de resultados</b> e plano de evolução para produção.</div></div></div>
+          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 4</div><div class="step-text"><b>Definição do recorte de base</b> e período de execução da POC.</div></div></div>
+          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 5</div><div class="step-text"><b>Execução e acompanhamento</b> semanal dos KPIs.</div></div></div>
+          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 6</div><div class="step-text"><b>Consolidação de resultados</b> e plano de evolução para produção.</div></div></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 6 · CLOSING -->
+  <!-- 6 · O QUE ESPERAR -->
   <section id="s6">
+    <div class="wrap">
+      <div class="eyebrow rv">Casos de sucesso · Blip</div>
+      <h1 class="rv" style="font-size:clamp(26px,3.6vw,50px);margin-bottom:16px;max-width:820px">O que esperar dessa <span class="hl-a">POC</span></h1>
+      <p class="sec-intro rv">Os números abaixo são de operações reais na plataforma Blip — com o mesmo stack que será usado na OLX: Agente de IA + Blip Desk + Copilot.</p>
+
+      <div class="expect-grid rv">
+
+        <!-- Bloco 1: Retenção com IA -->
+        <div class="expect-block">
+          <div class="expect-block-header">
+            <span class="expect-icon">🤖</span>
+            <span class="expect-block-title">Agente de IA — Contenção e resolução</span>
+          </div>
+          <div class="expect-stats">
+            <div class="expect-stat">
+              <div class="expect-num">+92%</div>
+              <div class="expect-label">de retenção nos fluxos com IA ativa</div>
+            </div>
+            <div class="expect-stat">
+              <div class="expect-num">~50%</div>
+              <div class="expect-label">de retenção nos fluxos sem IA — ponto de partida típico</div>
+            </div>
+          </div>
+          <p class="expect-desc">A diferença entre um atendimento que resolve e um que transborda não é a complexidade do assunto — é a inteligência aplicada. Onde a IA opera com fluxo completo, o transbordo para humano cai para menos de 8%.</p>
+          <div class="expect-source">Referência: Petz — operação WhatsApp Blip, set/2026</div>
+        </div>
+
+        <!-- Bloco 2: Copilot + Desk -->
+        <div class="expect-block">
+          <div class="expect-block-header">
+            <span class="expect-icon">⚡</span>
+            <span class="expect-block-title">Blip Desk + Copilot — Eficiência do time humano</span>
+          </div>
+          <div class="expect-stats">
+            <div class="expect-stat">
+              <div class="expect-num">2×</div>
+              <div class="expect-label">a capacidade de cada atendente com Copilot ativo</div>
+            </div>
+            <div class="expect-stat">
+              <div class="expect-num">−40%</div>
+              <div class="expect-label">no TMA médio — atendente começa entendendo, não lendo</div>
+            </div>
+          </div>
+          <p class="expect-desc">O Copilot resume a conversa, sugere a resposta com o tom da marca e elimina a necessidade de aba paralela ou bloco de notas. O que sobra para o humano chega pronto — o atendente valida e responde, não investiga do zero.</p>
+          <div class="expect-source">Referência: múltiplas operações Blip com Copilot ativo</div>
+        </div>
+
+        <!-- Bloco 3: Caso Leroy Merlin -->
+        <div class="expect-block expect-block--highlight">
+          <div class="expect-block-header">
+            <span class="expect-icon">🏆</span>
+            <span class="expect-block-title">Caso de referência — Leroy Merlin</span>
+          </div>
+          <div class="expect-stats">
+            <div class="expect-stat">
+              <div class="expect-num">270→80</div>
+              <div class="expect-label">atendentes — com volume de atendimento maior que antes</div>
+            </div>
+            <div class="expect-stat">
+              <div class="expect-num">−70%</div>
+              <div class="expect-label">no headcount necessário para sustentar a operação</div>
+            </div>
+          </div>
+          <p class="expect-desc">A maior rede de home improvement do mundo opera no WhatsApp com a Blip desde 2023. Com Copilot ativo, cada atendente passou a dobrar sua capacidade — histórico resumido, resposta sugerida, tom padronizado. O time foi de 270 para 80 pessoas enquanto o volume cresceu.</p>
+          <div class="expect-source">Referência: Leroy Merlin Brasil — WhatsApp Blip + Copilot, 2023–2026</div>
+        </div>
+
+      </div>
+
+      <!-- Linha de síntese -->
+      <div class="expect-summary rv">
+        <div class="expect-summary-inner">
+          <div class="expect-summary-col">
+            <div class="expect-summary-icon">📉</div>
+            <div class="expect-summary-label">Redução de TMA</div>
+            <div class="expect-summary-val">Transbordo chega com contexto — humano resolve sem re-trabalho</div>
+          </div>
+          <div class="expect-summary-divider"></div>
+          <div class="expect-summary-col">
+            <div class="expect-summary-icon">🕐</div>
+            <div class="expect-summary-label">Atendimento 24/7</div>
+            <div class="expect-summary-val">IA resolve dúvidas fora do horário do time humano</div>
+          </div>
+          <div class="expect-summary-divider"></div>
+          <div class="expect-summary-col">
+            <div class="expect-summary-icon">📈</div>
+            <div class="expect-summary-label">Escalabilidade</div>
+            <div class="expect-summary-val">Mesma equipe atende 2× o volume sem aumento de headcount</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 7 · CLOSING -->
+  <section id="s7">
     <div class="wrap">
       <div class="cl-logo rv"><span class="bub"></span>blip</div>
       <h1 class="rv">Pronto para <span class="hl-a">começar</span>?</h1>
