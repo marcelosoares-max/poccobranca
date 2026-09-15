@@ -91,7 +91,8 @@
   .motivo-badge{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.5px}
   .badge-auto{background:rgba(37,211,102,.15);color:var(--wa)}
   .badge-partial{background:rgba(255,193,7,.15);color:#ffc107}
-  .badge-human{background:rgba(239,83,80,.15);color:#ef5350}
+  .badge-human{background:rgba(255,193,7,.15);color:#ffc107}
+  .badge-api{background:rgba(83,133,239,.15);color:#5385ef}
   .motivo-body{padding:0 22px 18px;display:none}
   .motivo-body.open{display:block}
   .motivo-body p{color:var(--text-mute);font-size:13px;line-height:1.6;margin-bottom:8px}
@@ -192,7 +193,7 @@
     <div class="wrap">
       <div class="eyebrow rv">OLX × Blip · Agosto 2026</div>
       <h1 class="rv">Agente de <span class="hl-a">Cobrança</span> via WhatsApp</h1>
-      <p class="hero-sub rv">Recuperação de crédito com IA conversacional — disparo proativo, resolução de dúvidas e máxima contenção sem transbordo humano.</p>
+      <p class="hero-sub rv">Recuperação de crédito com IA conversacional — disparo proativo, resolução autônoma de dúvidas e transbordo inteligente com contexto.</p>
       <div class="meta rv">
         <div><div class="lbl">CLIENTE</div><div class="val">OLX</div></div>
         <div><div class="lbl">POR</div><div class="val">Blip — FDE</div></div>
@@ -221,16 +222,16 @@
         </div>
         <div class="kpi-card" style="text-align:center">
           <div style="font-family:var(--mono);font-size:clamp(32px,4vw,48px);font-weight:800;color:#ffc107;line-height:1">3</div>
-          <div style="color:var(--text-mute);font-size:12px;margin-top:6px">parciais — IA coleta contexto e transborda</div>
+          <div style="color:var(--text-mute);font-size:12px;margin-top:6px">transbordo com contexto — IA coleta e qualifica antes de passar</div>
         </div>
         <div class="kpi-card" style="text-align:center">
           <div style="font-family:var(--mono);font-size:clamp(32px,4vw,48px);font-weight:800;color:#ef5350;line-height:1">1</div>
-          <div style="color:var(--text-mute);font-size:12px;margin-top:6px">transbordo direto para o time comercial</div>
+          <div style="color:var(--text-mute);font-size:12px;margin-top:6px">aguardando API OLX para automação completa</div>
         </div>
       </div>
 
       <div class="rv" style="margin-top:32px;max-width:800px">
-        <p style="color:var(--text-mute);font-size:14px;line-height:1.7">A meta da POC não é apenas automatizar o disparo — é fazer a <b style="color:#fff">IA resolver a dúvida dentro da própria conversa</b>, reservando o time humano para os casos que genuinamente exigem julgamento ou acesso a sistemas ainda não integrados.</p>
+        <p style="color:var(--text-mute);font-size:14px;line-height:1.7">A meta da POC não é apenas automatizar o disparo — é fazer a <b style="color:#fff">IA resolver ou qualificar cada dúvida dentro da própria conversa</b>. Nos casos de transbordo, o agente entrega o atendente humano com contexto completo: sem re-trabalho, com menor TMA e melhor experiência para o cliente.</p>
       </div>
     </div>
   </section>
@@ -248,15 +249,16 @@
           <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
             <span class="motivo-icon">💬</span>
             <span class="motivo-title">Falar sobre valores (Retenção)</span>
-            <span class="motivo-badge badge-partial">Parcial</span>
+            <span class="motivo-badge badge-human">Transbordo com contexto</span>
           </div>
           <div class="motivo-body">
             <div class="motivo-label">O que o cliente traz</div>
             <p>Cliente com reajuste ou que considera o valor do plano alto; deseja negociar ou cancelar.</p>
             <div class="motivo-label">O que a IA resolve</div>
-            <p><b>Sondagem + proposta de valor da OLX.</b> Aplicação de desconto dentro de regras pré-aprovadas. Direcionamento comercial se optar por downgrade.</p>
+            <p><b>A IA identifica o motivo e coleta o contexto da situação</b> — qual plano, qual o valor em questão e qual a intenção do cliente — e transborda para o time humano já com essas informações organizadas.</p>
             <div class="motivo-label">Transbordo humano?</div>
-            <p>Somente se a negociação sair das regras pré-configuradas.</p>
+            <p>Sim — a negociação de valores é conduzida pelo atendente humano, que recebe o contexto completo coletado pela IA.</p>
+            <p style="color:#ffc107;font-size:12px;margin-top:6px">⚡ <b>Ganho:</b> otimização do atendimento e redução de TMA — o humano entra direto na negociação, sem precisar levantar o contexto do zero.</p>
           </div>
         </div>
 
@@ -264,16 +266,16 @@
           <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
             <span class="motivo-icon">🧾</span>
             <span class="motivo-title">Pagamento (2ª via / PDF)</span>
-            <span class="motivo-badge badge-partial">Parcial</span>
+            <span class="motivo-badge badge-api">Aguardando API</span>
           </div>
           <div class="motivo-body">
             <div class="motivo-label">O que o cliente traz</div>
             <p>Cliente quer pagar com fatura em PDF (código de barras / QR PIX), não pelo link digital.</p>
             <div class="motivo-label">O que a IA resolve</div>
-            <p><b>A IA identifica a intenção e coleta todo o contexto necessário</b> (nº do contrato, tipo de fatura, forma de pagamento desejada), transferindo ao atendente humano com as informações organizadas para envio do boleto correto.</p>
-            <div class="motivo-label">Transbordo humano?</div>
-            <p>Sim — nesta fase, o envio do boleto depende de ação humana por ausência de integração sistêmica.</p>
-            <p style="color:var(--wa);font-size:12px;margin-top:6px">⚡ <b>Potencial 100% IA:</b> com integração ao sistema de faturamento, a IA poderia gerar e enviar o boleto/QR PIX automaticamente, eliminando o transbordo.</p>
+            <p><b>Automação 100% pela IA</b> — geração e envio automático do boleto/QR PIX diretamente no WhatsApp, sem intervenção humana.</p>
+            <div class="motivo-label">Dependência</div>
+            <p>Aguardando documentação de API da OLX para viabilizar a integração com o sistema de faturamento. Assim que disponível, esse fluxo entra no escopo de desenvolvimento.</p>
+            <p style="color:#ffc107;font-size:12px;margin-top:6px">⏳ <b>Status:</b> aguardando retorno do cliente (documentação de API).</p>
           </div>
         </div>
 
@@ -287,9 +289,10 @@
             <div class="motivo-label">O que o cliente traz</div>
             <p>Trocar forma de pagamento (boleto ↔ cartão), cadastrar novo cartão, ou recusa no cartão (saldo insuficiente, cartão de uso único).</p>
             <div class="motivo-label">O que a IA resolve</div>
-            <p><b>Orientação passo a passo</b> de como alterar a forma de pagamento (recorrência ou cobrança única).</p>
+            <p><b>Orientação passo a passo</b> de como alterar a forma de pagamento (recorrência ou cobrança única) — 100% resolvido pelo agente, sem transbordo humano.</p>
             <div class="motivo-label">Transbordo humano?</div>
-            <p>Somente contato com a administradora do cartão em caso de recusa — fora do escopo da IA nesta fase.</p>
+            <p>Não. Somente em caso de recusa no cartão com necessidade de contato com a administradora — fora do escopo da IA nesta fase.</p>
+            <p style="color:#ffc107;font-size:12px;margin-top:6px">📋 <b>Pré-requisito:</b> OLX precisa fornecer a base de conhecimento com os procedimentos de troca de forma de pagamento.</p>
           </div>
         </div>
 
@@ -297,16 +300,16 @@
           <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
             <span class="motivo-icon">🔍</span>
             <span class="motivo-title">Pagamento não identificado</span>
-            <span class="motivo-badge badge-partial">Parcial</span>
+            <span class="motivo-badge badge-auto">100% IA</span>
           </div>
           <div class="motivo-body">
             <div class="motivo-label">O que o cliente traz</div>
             <p>Cliente alega pagamento agendado/realizado que não foi identificado ou compensado.</p>
             <div class="motivo-label">O que a IA resolve</div>
-            <p><b>A IA identifica o cenário, coleta os dados relevantes</b> (número do contrato, data do pagamento, forma utilizada) e <b>solicita o comprovante de pagamento ao cliente antes de transbordar</b> — o atendente humano recebe a conversa já com o comprovante em mãos para validação.</p>
+            <p><b>A IA conduz todo o fluxo de atendimento:</b> identifica o cenário, coleta os dados relevantes (número do contrato, data do pagamento, forma utilizada) e <b>solicita o comprovante ao cliente</b>. O transbordo ocorre somente após o comprovante em mãos — o atendente humano entra apenas para a validação final.</p>
             <div class="motivo-label">Transbordo humano?</div>
-            <p>Sim, mas somente após a coleta do comprovante — nesta fase, a validação final do pagamento depende de ação humana por ausência de integração com o sistema financeiro.</p>
-            <p style="color:var(--wa);font-size:12px;margin-top:6px">⚡ <b>Potencial 100% IA:</b> com integração ao sistema financeiro, a IA poderia consultar o status do pagamento em tempo real e resolver o caso automaticamente.</p>
+            <p>Somente para validação do comprovante coletado pela IA — o atendente humano recebe a conversa qualificada, sem precisar levantar nenhum contexto.</p>
+            <p style="color:#ffc107;font-size:12px;margin-top:6px">📋 <b>Pré-requisito:</b> OLX precisa fornecer a base de conhecimento com os procedimentos de identificação de pagamento.</p>
           </div>
         </div>
 
@@ -314,15 +317,16 @@
           <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
             <span class="motivo-icon">🚫</span>
             <span class="motivo-title">Cancelamento</span>
-            <span class="motivo-badge badge-auto">100% IA</span>
+            <span class="motivo-badge badge-human">Transbordo com contexto</span>
           </div>
           <div class="motivo-body">
             <div class="motivo-label">O que o cliente traz</div>
             <p>Cliente comunica que não pagará pois deseja cancelar o plano.</p>
             <div class="motivo-label">O que a IA resolve</div>
-            <p><b>Sondagem + proposta de valor.</b> Oferta de desconto ou pontuação extra no Clube de Vantagens + orientação de uso correto da plataforma.</p>
+            <p><b>A IA identifica a intenção de cancelamento, coleta o motivo e o contexto</b> (plano atual, tempo de contrato, situação financeira) e transborda para o time humano com as informações organizadas.</p>
             <div class="motivo-label">Transbordo humano?</div>
-            <p>Somente se o cliente mantiver a decisão de cancelar após a retenção — direcionamento comercial.</p>
+            <p>Sim — o atendente humano recebe o contexto completo da IA e conduz a negociação de retenção ou encaminha o cancelamento.</p>
+            <p style="color:#ffc107;font-size:12px;margin-top:6px">⚡ <b>Ganho:</b> otimização do atendimento e redução de TMA — o humano entra direto na retenção, sem precisar mapear a situação do cliente.</p>
           </div>
         </div>
 
@@ -330,15 +334,16 @@
           <div class="motivo-header" onclick="this.nextElementSibling.classList.toggle('open')">
             <span class="motivo-icon">📄</span>
             <span class="motivo-title">Pagamento de contrato já cancelado</span>
-            <span class="motivo-badge badge-human">Transbordo</span>
+            <span class="motivo-badge badge-human">Transbordo com contexto</span>
           </div>
           <div class="motivo-body">
             <div class="motivo-label">O que o cliente traz</div>
             <p>Cliente quer pagar fatura de contrato já cancelado por inadimplência.</p>
             <div class="motivo-label">O que a IA resolve</div>
-            <p><b>Identificação do cenário</b> e orientação inicial ao cliente.</p>
+            <p><b>A IA identifica o cenário, coleta os dados do contrato cancelado</b> e transborda para o time humano com as informações organizadas para agilizar o processo de reativação.</p>
             <div class="motivo-label">Transbordo humano?</div>
-            <p>Sim — abertura de chamado para reativação, ou direcionamento ao WhatsApp de aquisição OLX.</p>
+            <p>Sim — abertura de chamado para reativação ou direcionamento ao WhatsApp de aquisição OLX, com contexto completo já disponível ao atendente.</p>
+            <p style="color:#ffc107;font-size:12px;margin-top:6px">⚡ <b>Ganho:</b> otimização do atendimento e redução de TMA — o humano recebe o caso qualificado e age imediatamente.</p>
           </div>
         </div>
 
@@ -424,12 +429,13 @@
       <div class="rv" style="margin-top:40px;max-width:760px">
         <div class="eyebrow">Próximos passos</div>
         <div class="steps-list">
-          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 1</div><div class="step-text"><b>Validação do escopo</b> e das regras de negociação/desconto com a OLX.</div></div></div>
-          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 2</div><div class="step-text"><b>Levantamento do baseline</b> para definição das metas de cada KPI.</div></div></div>
-          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 3</div><div class="step-text"><b>Configuração do agente</b> e dos fluxos mapeados no escopo.</div></div></div>
-          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 4</div><div class="step-text"><b>Definição do recorte de base</b> e período de execução da POC.</div></div></div>
-          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 5</div><div class="step-text"><b>Execução e acompanhamento</b> semanal dos KPIs.</div></div></div>
-          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 6</div><div class="step-text"><b>Consolidação de resultados</b> e plano de evolução para produção.</div></div></div>
+          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 1</div><div class="step-text"><b>Validação do escopo</b> e alinhamento das regras de negócio com a OLX.</div></div></div>
+          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 2</div><div class="step-text"><b>Envio da base de conhecimento</b> pela OLX — cobre os temas de Formas de Pagamento e Pagamento não Identificado. O prazo de desenvolvimento de <b>5 dias úteis</b> começa a partir do recebimento.</div></div></div>
+          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 3</div><div class="step-text"><b>Documentação de API</b> para 2ª via de boleto — aguardando retorno da OLX. Após recebimento, o fluxo de 2ª via entra no escopo com prazo adicional a combinar.</div></div></div>
+          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 4</div><div class="step-text"><b>Levantamento do baseline</b> e definição das metas de KPI para a POC.</div></div></div>
+          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 5</div><div class="step-text"><b>Definição do recorte de base</b> e período de execução da POC.</div></div></div>
+          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 6</div><div class="step-text"><b>Execução e acompanhamento</b> semanal dos KPIs.</div></div></div>
+          <div class="step-item"><div class="step-dot"></div><div class="step-card"><div class="step-num">Etapa 7</div><div class="step-text"><b>Consolidação de resultados</b> e plano de evolução para produção.</div></div></div>
         </div>
       </div>
     </div>
@@ -475,10 +481,10 @@ window.addEventListener('load',updateDots);
 const chatData = [
   {type:'in',msg:'Olá! Aqui é da <b>OLX</b>. 👋\n\nIdentificamos uma fatura em aberto referente ao seu plano <b>Profissional+</b>.\n\n💰 Valor: R$ 189,90\n📅 Vencimento: 05/08/2026\n\nAcesse o link para pagar agora:\n🔗 olx.com.br/pagar/a1b2c3',delay:800},
   {type:'in',msg:'Se tiver alguma dúvida, estou aqui para ajudar! 😊',delay:1800},
-  {type:'out',msg:'Oi, tô achando esse valor muito alto. Queria negociar.',delay:3200},
-  {type:'in',msg:'Entendo sua preocupação! 💜\n\nO plano Profissional+ oferece:\n✅ Destaque nos anúncios\n✅ Até 5x mais visualizações\n✅ Selo verificado\n\nConsiderando esses benefícios, posso te oferecer um <b>desconto especial de 15%</b> para manter seu plano ativo.\n\nNovo valor: <b>R$ 161,42</b>',delay:4600},
-  {type:'out',msg:'Hmm, tá melhor. Aceito sim!',delay:6400},
-  {type:'in',msg:'Ótimo! 🎉 Aqui está seu link atualizado:\n\n🔗 olx.com.br/pagar/d4e5f6\n\nValor: <b>R$ 161,42</b>\nVálido até: 12/08/2026\n\nQualquer outra dúvida, é só me chamar!',delay:7800},
+  {type:'out',msg:'Oi! Mas como eu pago? Aceita PIX?',delay:3200},
+  {type:'in',msg:'Aceita sim! 😊\n\nAo acessar o link enviado, você encontrará as seguintes opções de pagamento:\n\n💚 <b>PIX</b> — QR Code gerado na hora, compensação imediata\n💳 <b>Cartão de crédito</b> — em até 12x\n\nBasta clicar no link abaixo e escolher a forma que preferir:\n🔗 olx.com.br/pagar/a1b2c3',delay:4800},
+  {type:'out',msg:'Ah, ótimo! Vou pagar pelo PIX então.',delay:6600},
+  {type:'in',msg:'Perfeito! 🎉\n\nAssim que o pagamento for confirmado, seu plano <b>Profissional+</b> segue ativo normalmente.\n\nQualquer outra dúvida, é só me chamar! 😊',delay:8000},
 ];
 
 let chatIndex = 0;
